@@ -126,5 +126,5 @@ class _MainAppState extends State<MainApp> {
   }
 
   bool _isInsideWall() =>
-      MapInfo.data[Player.position.dy.toInt()][Player.position.dx.toInt()] > 0;
+      MapInfo.data[Player.position.dy.floor()][Player.position.dx.floor()] > 0;
 }

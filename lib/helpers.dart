@@ -42,7 +42,7 @@ List<Offset> calculateRaycasts() {
     while (true) {
       ray = Offset(ray.dx + rayCos, ray.dy + raySin);
 
-      if (MapInfo.data[ray.dy.toInt()][ray.dx.toInt()] > 0) {
+      if (MapInfo.data[ray.dy.floor()][ray.dx.floor()] > 0) {
         break;
       }
     }

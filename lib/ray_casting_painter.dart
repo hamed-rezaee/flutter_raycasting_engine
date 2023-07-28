@@ -44,6 +44,74 @@ class RayCastingPainter extends CustomPainter {
 
       _drawGround(canvas, rayCount, wallHeight);
     }
+
+    // draw minimap
+    const double miniMapScale = 16 / Screen.scale;
+
+    for (int row = 0; row < MapInfo.data.first.length; row++) {
+      for (int col = 0; col < MapInfo.data.length; col++) {
+        canvas.drawRect(
+          Rect.fromLTWH(
+            col * miniMapScale,
+            row * miniMapScale,
+            miniMapScale,
+            miniMapScale,
+          ),
+          Paint()
+            ..color =
+                MapInfo.data[row][col] > 0 ? Colors.grey : Colors.transparent,
+        );
+
+        canvas.drawRect(
+          Rect.fromLTWH(
+            col * miniMapScale,
+            row * miniMapScale,
+            miniMapScale,
+            miniMapScale,
+          ),
+          Paint()
+            ..color = Colors.black
+            ..strokeWidth = 0.1 * miniMapScale
+            ..style = PaintingStyle.stroke,
+        );
+      }
+    }
+
+    /// draw player rays on minimap
+    for (int rayCount = 0; rayCount < rays.length; rayCount++) {
+      canvas.drawLine(
+        Player.position * miniMapScale,
+        rays[rayCount] * miniMapScale,
+        Paint()..color = Colors.white.withOpacity(0.5),
+      );
+    }
+
+    // draw player direction on minimap
+    canvas.drawLine(
+      Player.position * miniMapScale,
+      (Player.position +
+              Offset(cosDegrees(Player.angle), sinDegrees(Player.angle))) *
+          miniMapScale,
+      Paint()
+        ..color = Colors.black
+        ..strokeWidth = miniMapScale * 0.3,
+    );
+
+    // draw player position on minimap
+    canvas.drawCircle(
+      Player.position * miniMapScale,
+      miniMapScale * 0.3,
+      Paint()..color = Colors.orange,
+    );
+
+    canvas.drawCircle(
+      Player.position * miniMapScale,
+      miniMapScale * 0.3,
+      Paint()
+        ..color = Colors.black
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = miniMapScale * 0.2,
+    );
   }
 
   void _drawSky(Canvas canvas, int rayCount, double wallHeight) =>

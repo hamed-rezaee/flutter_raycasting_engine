@@ -31,8 +31,17 @@ class RayCastingPainter extends CustomPainter {
           (Projection.halfHeight / correctedDistance).floorToDouble();
 
       _drawSky(canvas, rayCount, wallHeight);
+
       // _drawWalls(canvas, rayCount, wallHeight);
-      _drawTexture(canvas, rays[rayCount], rayCount, wallHeight);
+
+      _drawTexture(
+        canvas,
+        rays[rayCount],
+        rayCount,
+        wallHeight,
+        correctedDistance,
+      );
+
       _drawGround(canvas, rayCount, wallHeight);
     }
   }
@@ -42,7 +51,7 @@ class RayCastingPainter extends CustomPainter {
         Offset(rayCount.toDouble(), 0),
         Offset(rayCount.toDouble(), Projection.halfHeight - wallHeight),
         Paint()
-          ..color = Colors.black
+          ..color = Colors.blue.shade900
           ..strokeWidth = 1,
       );
 
@@ -60,6 +69,7 @@ class RayCastingPainter extends CustomPainter {
     Offset ray,
     int rayCount,
     double wallHeight,
+    double distance,
   ) {
     final int texturePositionX =
         (BitmapTexture.width * (ray.dx + ray.dy) % BitmapTexture.width).floor();
@@ -68,13 +78,21 @@ class RayCastingPainter extends CustomPainter {
     double y = Projection.halfHeight - wallHeight;
 
     for (int i = 0; i < BitmapTexture.height; i++) {
+      final int textureColorIndex = BitmapTexture.bitmap[i][texturePositionX];
+      final Color wallColor = BitmapTexture.colors[textureColorIndex];
+
+      final Paint wallPainter = Paint()
+        ..color = getShadowedColor(
+          wallColor,
+          distance,
+          MapInfo.data.length.toDouble(),
+        )
+        ..strokeWidth = 1;
+
       canvas.drawLine(
         Offset(rayCount.toDouble(), y),
         Offset(rayCount.toDouble(), y + yIncrement + 0.5),
-        Paint()
-          ..color =
-              BitmapTexture.colors[BitmapTexture.bitmap[i][texturePositionX]]
-          ..strokeWidth = 1,
+        wallPainter,
       );
 
       y += yIncrement;

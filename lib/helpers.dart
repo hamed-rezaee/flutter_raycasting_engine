@@ -14,6 +14,20 @@ double getDistance(Offset a, Offset b) =>
 
 double getAngle(Offset a, Offset b) => atan2(b.dy - a.dy, b.dx - a.dx);
 
+Color getShadowedColor(Color color, double distance, double maxDistance) {
+  final double normalizedDistance = distance / maxDistance;
+  final double shadowIntensity = lerpDouble(1.0, 0.0, normalizedDistance)!;
+
+  final Color shadowedWallColor = Color.fromARGB(
+    color.alpha,
+    (color.red * shadowIntensity).toInt(),
+    (color.green * shadowIntensity).toInt(),
+    (color.blue * shadowIntensity).toInt(),
+  );
+
+  return shadowedWallColor;
+}
+
 List<Offset> calculateRaycasts() {
   final List<Offset> rays = <Offset>[];
 

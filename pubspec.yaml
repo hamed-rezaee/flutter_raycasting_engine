@@ -1,10 +1,11 @@
 name: flutter_raycasting
-description: A new Flutter project.
-publish_to: 'none'
+description: A Raycasting Engine for Flutter, based on https://github.com/vinibiavatti1/RayCastingTutorial.
+
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.0.5 <4.0.0'
+  sdk: ">=3.0.2 <4.0.0"
 
 dependencies:
   flutter:

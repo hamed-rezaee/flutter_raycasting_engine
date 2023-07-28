@@ -44,51 +44,42 @@ class RayCastingPainter extends CustomPainter {
       final double wallHeight =
           (Projection.halfHeight / distance).floorToDouble();
 
-      canvas.drawLine(
-        Offset(rayCount.toDouble(), 0),
-        Offset(rayCount.toDouble(), Projection.halfHeight - wallHeight),
-        Paint()
-          ..color = Colors.black
-          ..strokeWidth = Screen.scale,
-      );
-
-      // canvas.drawLine(
-      //   Offset(rayCount.toDouble(), Projection.halfHeight - wallHeight),
-      //   Offset(rayCount.toDouble(), Projection.halfHeight + wallHeight),
-      //   Paint()
-      //     ..color = Colors.red
-      //     ..strokeWidth = Screen.scale,
-      // );
-
-      int texturePositionX =
-          (BitmapTexture.width * (ray.dx + ray.dy) % BitmapTexture.width)
-              .floor();
-
-      _drwaTexture(
-        canvas,
-        rayCount,
-        wallHeight,
-        texturePositionX,
-      );
-
-      canvas.drawLine(
-        Offset(rayCount.toDouble(), Projection.halfHeight + wallHeight),
-        Offset(rayCount.toDouble(), Projection.height),
-        Paint()
-          ..color = Colors.green
-          ..strokeWidth = Screen.scale,
-      );
+      _drawSky(canvas, rayCount, wallHeight);
+      // _drawWalls(canvas, rayCount, wallHeight);
+      _drawTexture(canvas, ray, rayCount, wallHeight);
+      _drawGround(canvas, rayCount, wallHeight);
 
       rayAngle += RayCasting.increment;
     }
   }
 
-  void _drwaTexture(
+  void _drawSky(Canvas canvas, int rayCount, double wallHeight) =>
+      canvas.drawLine(
+        Offset(rayCount.toDouble(), 0),
+        Offset(rayCount.toDouble(), Projection.halfHeight - wallHeight),
+        Paint()
+          ..color = Colors.black
+          ..strokeWidth = 1,
+      );
+
+  // void _drawWalls(Canvas canvas, int rayCount, double wallHeight) =>
+  //     canvas.drawLine(
+  //       Offset(rayCount.toDouble(), Projection.halfHeight - wallHeight),
+  //       Offset(rayCount.toDouble(), Projection.halfHeight + wallHeight),
+  //       Paint()
+  //         ..color = Colors.red
+  //         ..strokeWidth = 1,
+  //     );
+
+  void _drawTexture(
     Canvas canvas,
+    Offset ray,
     int rayCount,
     double wallHeight,
-    int texturePositionX,
   ) {
+    final int texturePositionX =
+        (BitmapTexture.width * (ray.dx + ray.dy) % BitmapTexture.width).floor();
+
     double yIncrement = wallHeight * 2 / BitmapTexture.height;
     double y = Projection.halfHeight - wallHeight;
 
@@ -99,12 +90,21 @@ class RayCastingPainter extends CustomPainter {
         Paint()
           ..color =
               BitmapTexture.colors[BitmapTexture.bitmap[i][texturePositionX]]
-          ..strokeWidth = Screen.scale,
+          ..strokeWidth = 1,
       );
 
       y += yIncrement;
     }
   }
+
+  void _drawGround(Canvas canvas, int rayCount, double wallHeight) =>
+      canvas.drawLine(
+        Offset(rayCount.toDouble(), Projection.halfHeight + wallHeight),
+        Offset(rayCount.toDouble(), Projection.height),
+        Paint()
+          ..color = Colors.green
+          ..strokeWidth = 1,
+      );
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;

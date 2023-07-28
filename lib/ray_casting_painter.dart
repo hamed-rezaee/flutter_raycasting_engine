@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import 'data.dart';
@@ -21,24 +19,12 @@ class RayCastingPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.scale(Screen.scale, Screen.scale);
 
-    double rayAngle = Player.angle - Player.halfFov;
+    final List<Offset> rays = calculateRaycasts();
 
-    for (int rayCount = 0; rayCount < Projection.width; rayCount++) {
-      Offset ray = Player.position;
-
-      final double rayCos = cosDegrees(rayAngle) / RayCasting.precision;
-      final double raySin = sinDegrees(rayAngle) / RayCasting.precision;
-
-      while (true) {
-        ray = Offset(ray.dx + rayCos, ray.dy + raySin);
-
-        if (MapInfo.data[ray.dy.toInt()][ray.dx.toInt()] > 0) {
-          break;
-        }
-      }
-
-      final double distance = sqrt(pow(Player.position.dx - ray.dx, 2) +
-          pow(Player.position.dy - ray.dy, 2));
+    for (int rayCount = 0; rayCount < rays.length; rayCount++) {
+      final double distance = getDistance(playerPosition, rays[rayCount]);
+      final double rayAngle =
+          Player.angle - Player.halfFov + (rayCount * RayCasting.increment);
       final double correctedDistance =
           distance * cosDegrees(rayAngle - Player.angle);
       final double wallHeight =
@@ -46,10 +32,8 @@ class RayCastingPainter extends CustomPainter {
 
       _drawSky(canvas, rayCount, wallHeight);
       // _drawWalls(canvas, rayCount, wallHeight);
-      _drawTexture(canvas, ray, rayCount, wallHeight);
+      _drawTexture(canvas, rays[rayCount], rayCount, wallHeight);
       _drawGround(canvas, rayCount, wallHeight);
-
-      rayAngle += RayCasting.increment;
     }
   }
 

@@ -26,8 +26,8 @@ class RayCastingPainter extends CustomPainter {
     for (int rayCount = 0; rayCount < Projection.width; rayCount++) {
       Offset ray = Player.position;
 
-      final rayCos = cosDegrees(rayAngle) / RayCasting.precision;
-      final raySin = sinDegrees(rayAngle) / RayCasting.precision;
+      final double rayCos = cosDegrees(rayAngle) / RayCasting.precision;
+      final double raySin = sinDegrees(rayAngle) / RayCasting.precision;
 
       while (true) {
         ray = Offset(ray.dx + rayCos, ray.dy + raySin);
@@ -37,12 +37,12 @@ class RayCastingPainter extends CustomPainter {
         }
       }
 
-      double distance = sqrt(pow(Player.position.dx - ray.dx, 2) +
+      final double distance = sqrt(pow(Player.position.dx - ray.dx, 2) +
           pow(Player.position.dy - ray.dy, 2));
-      distance = distance * cosDegrees(rayAngle - Player.angle);
-
+      final double correctedDistance =
+          distance * cosDegrees(rayAngle - Player.angle);
       final double wallHeight =
-          (Projection.halfHeight / distance).floorToDouble();
+          (Projection.halfHeight / correctedDistance).floorToDouble();
 
       _drawSky(canvas, rayCount, wallHeight);
       // _drawWalls(canvas, rayCount, wallHeight);
@@ -79,8 +79,8 @@ class RayCastingPainter extends CustomPainter {
   ) {
     final int texturePositionX =
         (BitmapTexture.width * (ray.dx + ray.dy) % BitmapTexture.width).floor();
+    final double yIncrement = wallHeight * 2 / BitmapTexture.height;
 
-    double yIncrement = wallHeight * 2 / BitmapTexture.height;
     double y = Projection.halfHeight - wallHeight;
 
     for (int i = 0; i < BitmapTexture.height; i++) {

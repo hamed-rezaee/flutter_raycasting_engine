@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'data.dart';
-import 'helpers.dart';
+import 'calculation_helpers.dart';
 import 'ray_casting_painter.dart';
 
 void main() => runApp(const MainApp());

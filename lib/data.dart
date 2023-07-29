@@ -20,7 +20,6 @@ class Projection {
 }
 
 class RayCasting {
-  static const double increment = Player.fov / Projection.width;
   static const int precision = 32;
 }
 
@@ -29,7 +28,6 @@ class Player {
   static double angle = 0;
 
   static const double fov = 60;
-  static const double halfFov = fov / 2;
   static const double radius = 10;
   static const double speed = 0.2;
   static const double rotationSpeed = 3;

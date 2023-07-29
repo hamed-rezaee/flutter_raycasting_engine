@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'data.dart';
-import 'helpers.dart';
+import 'calculation_helpers.dart';
 
 class RayCastingPainter extends CustomPainter {
   RayCastingPainter({
@@ -19,12 +19,21 @@ class RayCastingPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.scale(Screen.scale, Screen.scale);
 
-    final List<Offset> rays = calculateRaycasts();
+    final List<Offset> rays = calculateRaycasts(
+      playerPosition: Player.position,
+      playerAngle: Player.angle,
+      fov: Player.fov,
+      precision: RayCasting.precision,
+      width: Projection.width,
+      map: MapInfo.data,
+    );
 
     for (int rayCount = 0; rayCount < rays.length; rayCount++) {
+      const double halfFov = Player.fov / 2;
+      const double increment = Player.fov / Projection.width;
+
       final double distance = getDistance(playerPosition, rays[rayCount]);
-      final double rayAngle =
-          Player.angle - Player.halfFov + (rayCount * RayCasting.increment);
+      final double rayAngle = Player.angle - halfFov + (rayCount * increment);
       final double correctedDistance =
           distance * cosDegrees(rayAngle - Player.angle);
       final double wallHeight =

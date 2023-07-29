@@ -1,8 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'data.dart';
-
 double degreesToRadians(double degrees) => degrees * pi / 180;
 
 double cosDegrees(double degrees) => cos(degreesToRadians(degrees));
@@ -26,28 +24,35 @@ Color getShadowedColor(Color color, double distance, double maxDistance) {
   return shadowedWallColor;
 }
 
-List<Offset> calculateRaycasts() {
+List<Offset> calculateRaycasts({
+  required Offset playerPosition,
+  required double playerAngle,
+  required double fov,
+  required int precision,
+  required double width,
+  required List<List<int>> map,
+}) {
   final List<Offset> rays = <Offset>[];
 
-  double rayAngle = Player.angle - Player.halfFov;
+  double rayAngle = playerAngle - fov / 2;
 
-  for (int rayCount = 0; rayCount < Projection.width; rayCount++) {
-    Offset ray = Player.position;
+  for (int rayCount = 0; rayCount < width; rayCount++) {
+    Offset ray = playerPosition;
 
-    final double rayCos = cosDegrees(rayAngle) / RayCasting.precision;
-    final double raySin = sinDegrees(rayAngle) / RayCasting.precision;
+    final double rayCos = cosDegrees(rayAngle) / precision;
+    final double raySin = sinDegrees(rayAngle) / precision;
 
     while (true) {
       ray = Offset(ray.dx + rayCos, ray.dy + raySin);
 
-      if (MapInfo.data[ray.dy.floor()][ray.dx.floor()] > 0) {
+      if (map[ray.dy.floor()][ray.dx.floor()] > 0) {
         break;
       }
     }
 
     rays.add(ray);
 
-    rayAngle += RayCasting.increment;
+    rayAngle += fov / width;
   }
 
   return rays;

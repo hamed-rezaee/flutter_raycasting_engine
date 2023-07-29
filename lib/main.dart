@@ -122,5 +122,6 @@ class _MainAppState extends State<MainApp> {
 
     textures['brick'] = await getBitmapTexture('assets/brick.bmp');
     textures['stone'] = await getBitmapTexture('assets/stone.bmp');
+    textures['door'] = await getBitmapTexture('assets/door.bmp');
   }
 }

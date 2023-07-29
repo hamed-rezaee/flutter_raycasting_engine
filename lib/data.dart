@@ -20,11 +20,11 @@ class Projection {
 }
 
 class RayCasting {
-  static const int precision = 32;
+  static const int precision = 64;
 }
 
 class Player {
-  static Offset position = const Offset(5, 7);
+  static Offset position = const Offset(2, 2);
   static double angle = 0;
 
   static const double fov = 60;
@@ -37,17 +37,13 @@ class MapInfo {
   static const List<List<int>> data = <List<int>>[
     <int>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     <int>[1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    <int>[1, 0, 1, 1, 1, 0, 1, 0, 0, 1],
-    <int>[1, 0, 0, 0, 0, 0, 1, 1, 0, 1],
-    <int>[1, 0, 1, 1, 0, 0, 1, 0, 0, 1],
-    <int>[1, 0, 1, 0, 0, 1, 1, 0, 0, 1],
-    <int>[1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-    <int>[1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-    <int>[1, 0, 1, 0, 0, 1, 0, 1, 1, 1],
-    <int>[1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-    <int>[1, 2, 2, 2, 2, 2, 0, 1, 0, 1],
-    <int>[1, 0, 0, 0, 1, 0, 0, 1, 0, 1],
     <int>[1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    <int>[1, 0, 0, 0, 0, 2, 0, 0, 0, 1],
+    <int>[1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    <int>[1, 0, 0, 0, 0, 0, 0, 2, 0, 1],
+    <int>[1, 1, 1, 1, 0, 0, 0, 2, 0, 1],
+    <int>[1, 0, 0, 3, 0, 0, 0, 2, 0, 1],
+    <int>[1, 0, 0, 1, 0, 0, 0, 2, 0, 1],
     <int>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ];
 
@@ -55,6 +51,7 @@ class MapInfo {
     0: 'grass',
     1: 'brick',
     2: 'stone',
+    3: 'door',
   };
 }
 

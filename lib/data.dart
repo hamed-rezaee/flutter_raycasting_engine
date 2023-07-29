@@ -5,7 +5,7 @@ class Screen {
   static const double height = 480;
   static const double halfWidth = width / 2;
   static const double halfHeight = height / 2;
-  static const double scale = 2;
+  static const double scale = 4;
 }
 
 class MiniMap {
@@ -45,7 +45,7 @@ class MapInfo {
     <int>[1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
     <int>[1, 0, 1, 0, 0, 1, 0, 1, 1, 1],
     <int>[1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-    <int>[1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
+    <int>[1, 2, 2, 2, 2, 2, 0, 1, 0, 1],
     <int>[1, 0, 0, 0, 1, 0, 0, 1, 0, 1],
     <int>[1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     <int>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -54,6 +54,7 @@ class MapInfo {
   static const Map<int, String> textures = <int, String>{
     0: 'grass',
     1: 'brick',
+    2: 'stone',
   };
 }
 

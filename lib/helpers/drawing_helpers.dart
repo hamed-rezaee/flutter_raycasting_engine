@@ -121,8 +121,11 @@ void drawTexture({
   required double wallHeight,
   required double distance,
   required double height,
-  required BitmapTexture texture,
+  required Map<String, BitmapTexture> textures,
 }) {
+  final int mapValue = getMapValue(ray, MapInfo.data);
+  final BitmapTexture texture = textures[MapInfo.textures[mapValue]]!;
+
   final int textureWidth = texture.bitmap.first.length;
   final int textureHeight = texture.bitmap.length;
 

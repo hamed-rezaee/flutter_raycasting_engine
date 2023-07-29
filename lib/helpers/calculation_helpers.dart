@@ -24,6 +24,9 @@ Color getShadowedColor(Color color, double distance, double maxDistance) {
   return shadowedWallColor;
 }
 
+int getMapValue(Offset position, List<List<int>> map) =>
+    map[position.dy.floor()][position.dx.floor()];
+
 List<Offset> calculateRaycasts({
   required Offset playerPosition,
   required double playerAngle,

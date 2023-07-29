@@ -141,6 +141,11 @@ class _MainAppState extends State<MainApp> {
       MapInfo.data[Player.position.dy.floor()][Player.position.dx.floor()] > 0;
 
   Future<void> _loadTextures() async {
+    if (textures.isNotEmpty) {
+      return;
+    }
+
     textures['brick'] = await getBitmapTexture('assets/brick.bmp');
+    textures['stone'] = await getBitmapTexture('assets/stone.bmp');
   }
 }

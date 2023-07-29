@@ -55,7 +55,7 @@ class RayCastingPainter extends CustomPainter {
         wallHeight: wallHeight,
         distance: distance,
         height: Projection.height,
-        texture: textures['brick']!,
+        textures: textures,
       );
 
       drawGround(

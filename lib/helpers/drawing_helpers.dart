@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_raycasting/data.dart';
 
+import '../main.dart';
 import 'calculation_helpers.dart';
 
 void drawMiniMap({
@@ -10,16 +11,25 @@ void drawMiniMap({
 }) {
   for (int i = 0; i < map.length; i++) {
     for (int j = 0; j < map.first.length; j++) {
-      if (map[i][j] > 0) {
-        canvas.drawRect(
-          Rect.fromLTRB(
-            j * scale,
-            i * scale,
-            j * scale + scale,
-            i * scale + scale,
-          ),
-          Paint()..color = Colors.orange,
-        );
+      final BitmapTexture texture =
+          textures[MapInfo.textures[map[i][j]]] ?? textures['unknown']!;
+      final int textureWidth = texture.bitmap.first.length;
+      final int textureHeight = texture.bitmap.length;
+
+      for (int y = 0; y < textureHeight; y++) {
+        for (int x = 0; x < textureWidth; x++) {
+          canvas.drawRect(
+            Rect.fromLTRB(
+              j * scale + x * scale / textureWidth,
+              i * scale + y * scale / textureHeight,
+              j * scale + x * scale / textureWidth + scale / textureWidth,
+              i * scale + y * scale / textureHeight + scale / textureHeight,
+            ),
+            Paint()
+              ..color = texture.bitmap[y][x]
+              ..style = PaintingStyle.fill,
+          );
+        }
       }
 
       canvas.drawRect(
@@ -124,7 +134,8 @@ void drawTexture({
   required Map<String, BitmapTexture> textures,
 }) {
   final int mapValue = getMapValue(ray, MapInfo.data);
-  final BitmapTexture texture = textures[MapInfo.textures[mapValue]]!;
+  final BitmapTexture texture =
+      textures[MapInfo.textures[mapValue]] ?? textures['unknown']!;
 
   final int textureWidth = texture.bitmap.first.length;
   final int textureHeight = texture.bitmap.length;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_raycasting/data.dart';
 
 import 'calculation_helpers.dart';
+import 'textures.dart';
 
 void drawMiniMap({
   required Canvas canvas,
@@ -114,15 +115,15 @@ void drawWalls({
         ..strokeWidth = 1,
     );
 
-void drawTexture(
-  Canvas canvas,
-  Offset ray,
-  int rayCount,
-  double wallHeight,
-  double distance,
-  double height,
-  BitmapTexture texture,
-) {
+void drawTexture({
+  required Canvas canvas,
+  required Offset ray,
+  required int rayCount,
+  required double wallHeight,
+  required double distance,
+  required double height,
+  required BitmapTexture texture,
+}) {
   final int texturePositionX =
       (texture.width * (ray.dx + ray.dy) % texture.width).floor();
   final double yIncrement = wallHeight * 2 / texture.height;

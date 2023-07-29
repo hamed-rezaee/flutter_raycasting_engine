@@ -51,22 +51,3 @@ class MapInfo {
     <int>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ];
 }
-
-class BitmapTexture {
-  double width = 8;
-  double height = 8;
-  List<Color> colors = <Color>[
-    const Color.fromARGB(255, 255, 241, 232),
-    const Color.fromARGB(255, 194, 195, 199),
-  ];
-  List<List<int>> bitmap = <List<int>>[
-    <int>[1, 1, 1, 1, 1, 1, 1, 1],
-    <int>[0, 0, 0, 1, 0, 0, 0, 1],
-    <int>[1, 1, 1, 1, 1, 1, 1, 1],
-    <int>[0, 1, 0, 0, 0, 1, 0, 0],
-    <int>[1, 1, 1, 1, 1, 1, 1, 1],
-    <int>[0, 0, 0, 1, 0, 0, 0, 1],
-    <int>[1, 1, 1, 1, 1, 1, 1, 1],
-    <int>[0, 1, 0, 0, 0, 1, 0, 0]
-  ];
-}

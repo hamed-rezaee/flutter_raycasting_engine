@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_raycasting/data.dart';
 
 import 'calculation_helpers.dart';
-import 'textures.dart';
 
 void drawMiniMap({
   required Canvas canvas,
@@ -124,19 +123,21 @@ void drawTexture({
   required double height,
   required BitmapTexture texture,
 }) {
+  final int textureWidth = texture.bitmap.first.length;
+  final int textureHeight = texture.bitmap.length;
+
   final int texturePositionX =
-      (texture.width * (ray.dx + ray.dy) % texture.width).floor();
-  final double yIncrement = wallHeight * 2 / texture.height;
+      (textureWidth * (ray.dx + ray.dy) % textureWidth).floor();
+  final double yIncrement = wallHeight * 2 / textureHeight;
 
   double y = height / 2 - wallHeight;
 
-  for (int i = 0; i < texture.height; i++) {
-    final int textureColorIndex = texture.bitmap[i][texturePositionX];
-    final Color wallColor = texture.colors[textureColorIndex];
+  for (int i = 0; i < textureHeight; i++) {
+    final Color textureColor = texture.bitmap[i][texturePositionX];
 
     final Paint wallPainter = Paint()
       ..color = getShadowedColor(
-        wallColor,
+        textureColor,
         distance,
         MapInfo.data.length.toDouble(),
       )

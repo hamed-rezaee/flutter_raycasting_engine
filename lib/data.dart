@@ -50,4 +50,15 @@ class MapInfo {
     <int>[1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     <int>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ];
+
+  static const Map<int, String> textures = <int, String>{
+    0: 'grass',
+    1: 'brick',
+  };
+}
+
+class BitmapTexture {
+  BitmapTexture(this.bitmap);
+
+  final List<List<Color>> bitmap;
 }

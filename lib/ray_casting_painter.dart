@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_raycasting/textures.dart';
+import 'package:flutter_raycasting/main.dart';
 
 import 'data.dart';
-import 'calculation_helpers.dart';
-import 'drawing_helpers.dart';
+import 'helpers/calculation_helpers.dart';
+import 'helpers/drawing_helpers.dart';
 
 class RayCastingPainter extends CustomPainter {
   RayCastingPainter({
@@ -55,7 +55,7 @@ class RayCastingPainter extends CustomPainter {
         wallHeight: wallHeight,
         distance: distance,
         height: Projection.height,
-        texture: brickTexture,
+        texture: textures['brick']!,
       );
 
       drawGround(

@@ -51,31 +51,6 @@ class _MainAppState extends State<MainApp> {
               );
             },
           ),
-          floatingActionButton: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              TextButton(
-                onPressed: moveUp,
-                child: const Icon(Icons.arrow_upward, color: Colors.black),
-              ),
-              const SizedBox(width: 8),
-              TextButton(
-                onPressed: moveDown,
-                child: const Icon(Icons.arrow_downward, color: Colors.black),
-              ),
-              const SizedBox(width: 8),
-              TextButton(
-                onPressed: rotateLeft,
-                child: const Icon(Icons.rotate_left, color: Colors.black),
-              ),
-              const SizedBox(width: 8),
-              TextButton(
-                onPressed: rotateRight,
-                child: const Icon(Icons.rotate_right, color: Colors.black),
-              ),
-            ],
-          ),
         ),
       );
 

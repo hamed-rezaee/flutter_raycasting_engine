@@ -5,7 +5,7 @@ class Screen {
   static const double height = 480;
   static const double halfWidth = width / 2;
   static const double halfHeight = height / 2;
-  static const double scale = 4;
+  static const double scale = 2;
 }
 
 class MiniMap {

@@ -40,14 +40,49 @@ class RayCastingPainter extends CustomPainter {
       final double wallHeight =
           (Projection.halfHeight / correctedDistance).floorToDouble();
 
-      drawSky(canvas, rayCount, wallHeight);
-      drawWalls(canvas, rayCount, wallHeight, correctedDistance);
-      drawGround(canvas, rayCount, wallHeight);
+      drawSky(
+        canvas: canvas,
+        rayCount: rayCount,
+        wallHeight: wallHeight,
+        height: Projection.height,
+      );
+
+      drawWalls(
+        canvas: canvas,
+        rayCount: rayCount,
+        wallHeight: wallHeight,
+        distance: distance,
+        height: Projection.height,
+        map: MapInfo.data,
+      );
+
+      drawGround(
+        canvas: canvas,
+        rayCount: rayCount,
+        wallHeight: wallHeight,
+        height: Projection.height,
+      );
     }
 
-    drawMiniMap(canvas);
-    drawRays(canvas, rays);
-    drawPlayer(canvas);
+    drawMiniMap(
+      canvas: canvas,
+      map: MapInfo.data,
+      scale: MiniMap.scale,
+    );
+
+    drawMiniMapRays(
+      canvas: canvas,
+      playerPosition: Player.position,
+      rays: rays,
+      scale: MiniMap.scale,
+    );
+
+    drawMiniMapPlayer(
+      canvas: canvas,
+      playerPosition: Player.position,
+      playerAngle: Player.angle,
+      scale: MiniMap.scale,
+    );
   }
 
   @override

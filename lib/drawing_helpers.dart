@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_raycasting/data.dart';
 
 import 'calculation_helpers.dart';
-import 'data.dart';
 
-void drawMiniMap(Canvas canvas) {
-  for (int i = 0; i < MapInfo.data.length; i++) {
-    for (int j = 0; j < MapInfo.data.first.length; j++) {
-      if (MapInfo.data[i][j] > 0) {
+void drawMiniMap({
+  required Canvas canvas,
+  required List<List<int>> map,
+  required double scale,
+}) {
+  for (int i = 0; i < map.length; i++) {
+    for (int j = 0; j < map.first.length; j++) {
+      if (map[i][j] > 0) {
         canvas.drawRect(
           Rect.fromLTRB(
-            j * MiniMap.scale,
-            i * MiniMap.scale,
-            j * MiniMap.scale + MiniMap.scale,
-            i * MiniMap.scale + MiniMap.scale,
+            j * scale,
+            i * scale,
+            j * scale + scale,
+            i * scale + scale,
           ),
           Paint()..color = Colors.orange,
         );
@@ -20,10 +24,10 @@ void drawMiniMap(Canvas canvas) {
 
       canvas.drawRect(
         Rect.fromLTRB(
-          j * MiniMap.scale,
-          i * MiniMap.scale,
-          j * MiniMap.scale + MiniMap.scale,
-          i * MiniMap.scale + MiniMap.scale,
+          j * scale,
+          i * scale,
+          j * scale + scale,
+          i * scale + scale,
         ),
         Paint()
           ..color = Colors.black
@@ -33,66 +37,80 @@ void drawMiniMap(Canvas canvas) {
   }
 }
 
-void drawRays(Canvas canvas, List<Offset> rays) {
+void drawMiniMapRays({
+  required Canvas canvas,
+  required Offset playerPosition,
+  required List<Offset> rays,
+  required double scale,
+}) {
   for (int rayCount = 0; rayCount < rays.length; rayCount++) {
     canvas.drawLine(
-      Player.position * MiniMap.scale,
-      rays[rayCount] * MiniMap.scale,
+      playerPosition * scale,
+      rays[rayCount] * scale,
       Paint()..color = Colors.white.withOpacity(0.3),
     );
   }
 }
 
-void drawPlayer(Canvas canvas) {
+void drawMiniMapPlayer({
+  required Canvas canvas,
+  required Offset playerPosition,
+  required double playerAngle,
+  required double scale,
+}) {
   canvas.drawLine(
-    Player.position * MiniMap.scale,
-    (Player.position +
-            Offset(cosDegrees(Player.angle), sinDegrees(Player.angle))) *
-        MiniMap.scale,
+    playerPosition * scale,
+    (playerPosition +
+            Offset(cosDegrees(playerAngle), sinDegrees(playerAngle))) *
+        scale,
     Paint()
       ..color = Colors.black
-      ..strokeWidth = MiniMap.scale * 0.3,
+      ..strokeWidth = scale * 0.3,
   );
 
   canvas.drawCircle(
-    Player.position * MiniMap.scale,
-    MiniMap.scale * 0.3,
+    playerPosition * scale,
+    scale * 0.3,
     Paint()..color = Colors.orange,
   );
 
   canvas.drawCircle(
-    Player.position * MiniMap.scale,
-    MiniMap.scale * 0.3,
+    playerPosition * scale,
+    scale * 0.3,
     Paint()
       ..color = Colors.black
       ..style = PaintingStyle.stroke
-      ..strokeWidth = MiniMap.scale * 0.2,
+      ..strokeWidth = scale * 0.2,
   );
 }
 
-void drawSky(Canvas canvas, int rayCount, double wallHeight) => canvas.drawLine(
+void drawSky({
+  required Canvas canvas,
+  required int rayCount,
+  required double wallHeight,
+  required double height,
+}) =>
+    canvas.drawLine(
       Offset(rayCount.toDouble(), 0),
-      Offset(rayCount.toDouble(), Projection.halfHeight - wallHeight),
+      Offset(rayCount.toDouble(), height / 2 - wallHeight),
       Paint()
         ..color = Colors.indigo
         ..strokeWidth = 1,
     );
 
-void drawWalls(
-  Canvas canvas,
-  int rayCount,
-  double wallHeight,
-  double distance,
-) =>
+void drawWalls({
+  required Canvas canvas,
+  required int rayCount,
+  required double wallHeight,
+  required double distance,
+  required double height,
+  required List<List<int>> map,
+}) =>
     canvas.drawLine(
-      Offset(rayCount.toDouble(), Projection.halfHeight - wallHeight),
-      Offset(rayCount.toDouble(), Projection.halfHeight + wallHeight),
+      Offset(rayCount.toDouble(), height / 2 - wallHeight),
+      Offset(rayCount.toDouble(), height / 2 + wallHeight),
       Paint()
-        ..color = getShadowedColor(
-          Colors.red,
-          distance,
-          MapInfo.data.length.toDouble(),
-        )
+        ..color = getShadowedColor(Colors.red, distance, map.length.toDouble())
         ..strokeWidth = 1,
     );
 
@@ -102,16 +120,18 @@ void drawTexture(
   int rayCount,
   double wallHeight,
   double distance,
+  double height,
+  BitmapTexture texture,
 ) {
   final int texturePositionX =
-      (BitmapTexture.width * (ray.dx + ray.dy) % BitmapTexture.width).floor();
-  final double yIncrement = wallHeight * 2 / BitmapTexture.height;
+      (texture.width * (ray.dx + ray.dy) % texture.width).floor();
+  final double yIncrement = wallHeight * 2 / texture.height;
 
-  double y = Projection.halfHeight - wallHeight;
+  double y = height / 2 - wallHeight;
 
-  for (int i = 0; i < BitmapTexture.height; i++) {
-    final int textureColorIndex = BitmapTexture.bitmap[i][texturePositionX];
-    final Color wallColor = BitmapTexture.colors[textureColorIndex];
+  for (int i = 0; i < texture.height; i++) {
+    final int textureColorIndex = texture.bitmap[i][texturePositionX];
+    final Color wallColor = texture.colors[textureColorIndex];
 
     final Paint wallPainter = Paint()
       ..color = getShadowedColor(
@@ -131,9 +151,14 @@ void drawTexture(
   }
 }
 
-void drawGround(Canvas canvas, int rayCount, double wallHeight) =>
+void drawGround({
+  required Canvas canvas,
+  required int rayCount,
+  required double wallHeight,
+  required double height,
+}) =>
     canvas.drawLine(
-      Offset(rayCount.toDouble(), Projection.halfHeight + wallHeight),
+      Offset(rayCount.toDouble(), height / 2 + wallHeight),
       Offset(rayCount.toDouble(), Projection.height),
       Paint()
         ..color = Colors.green

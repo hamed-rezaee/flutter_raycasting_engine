@@ -5,7 +5,11 @@ class Screen {
   static const double height = 480;
   static const double halfWidth = width / 2;
   static const double halfHeight = height / 2;
-  static const double scale = 4;
+  static const double scale = 2;
+}
+
+class MiniMap {
+  static const double scale = 16 / Screen.scale;
 }
 
 class Projection {
@@ -17,32 +21,36 @@ class Projection {
 
 class RayCasting {
   static const double increment = Player.fov / Projection.width;
-  static const int precision = 64;
+  static const int precision = 32;
 }
 
 class Player {
-  static Offset position = const Offset(2, 2);
+  static Offset position = const Offset(5, 7);
   static double angle = 0;
 
   static const double fov = 60;
   static const double halfFov = fov / 2;
   static const double radius = 10;
-  static const double speed = 0.5;
+  static const double speed = 0.2;
   static const double rotationSpeed = 3;
 }
 
 class MapInfo {
   static const List<List<int>> data = <List<int>>[
-    <int>[2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-    <int>[2, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-    <int>[2, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-    <int>[2, 0, 0, 2, 2, 0, 2, 0, 0, 2],
-    <int>[2, 0, 0, 2, 0, 0, 2, 0, 0, 2],
-    <int>[2, 0, 0, 2, 0, 0, 2, 0, 0, 2],
-    <int>[2, 0, 0, 2, 0, 2, 2, 0, 0, 2],
-    <int>[2, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-    <int>[2, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-    <int>[2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    <int>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    <int>[1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    <int>[1, 0, 1, 1, 1, 0, 1, 0, 0, 1],
+    <int>[1, 0, 0, 0, 0, 0, 1, 1, 0, 1],
+    <int>[1, 0, 1, 1, 0, 0, 1, 0, 0, 1],
+    <int>[1, 0, 1, 0, 0, 1, 1, 0, 0, 1],
+    <int>[1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    <int>[1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    <int>[1, 0, 1, 0, 0, 1, 0, 1, 1, 1],
+    <int>[1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+    <int>[1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
+    <int>[1, 0, 0, 0, 1, 0, 0, 1, 0, 1],
+    <int>[1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    <int>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ];
 }
 

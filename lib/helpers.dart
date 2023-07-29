@@ -12,8 +12,6 @@ double sinDegrees(double degrees) => sin(degreesToRadians(degrees));
 double getDistance(Offset a, Offset b) =>
     sqrt(pow(a.dx - b.dx, 2) + pow(a.dy - b.dy, 2));
 
-double getAngle(Offset a, Offset b) => atan2(b.dy - a.dy, b.dx - a.dx);
-
 Color getShadowedColor(Color color, double distance, double maxDistance) {
   final double normalizedDistance = distance / maxDistance;
   final double shadowIntensity = lerpDouble(1.0, 0.0, normalizedDistance)!;

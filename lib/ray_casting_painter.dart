@@ -31,86 +31,79 @@ class RayCastingPainter extends CustomPainter {
           (Projection.halfHeight / correctedDistance).floorToDouble();
 
       _drawSky(canvas, rayCount, wallHeight);
-
-      // _drawWalls(canvas, rayCount, wallHeight);
-
-      _drawTexture(
-        canvas,
-        rays[rayCount],
-        rayCount,
-        wallHeight,
-        correctedDistance,
-      );
-
+      _drawWalls(canvas, rayCount, wallHeight, correctedDistance);
       _drawGround(canvas, rayCount, wallHeight);
     }
 
-    // draw minimap
-    const double miniMapScale = 16 / Screen.scale;
+    _drawMiniMap(canvas);
+    _drawRays(canvas, rays);
+    _drawPlayer(canvas);
+  }
 
-    for (int row = 0; row < MapInfo.data.first.length; row++) {
-      for (int col = 0; col < MapInfo.data.length; col++) {
-        canvas.drawRect(
-          Rect.fromLTWH(
-            col * miniMapScale,
-            row * miniMapScale,
-            miniMapScale,
-            miniMapScale,
-          ),
-          Paint()
-            ..color =
-                MapInfo.data[row][col] > 0 ? Colors.grey : Colors.transparent,
-        );
+  void _drawMiniMap(Canvas canvas) {
+    for (int i = 0; i < MapInfo.data.length; i++) {
+      for (int j = 0; j < MapInfo.data.first.length; j++) {
+        if (MapInfo.data[i][j] > 0) {
+          canvas.drawRect(
+            Rect.fromLTRB(
+              j * MiniMap.scale,
+              i * MiniMap.scale,
+              j * MiniMap.scale + MiniMap.scale,
+              i * MiniMap.scale + MiniMap.scale,
+            ),
+            Paint()..color = Colors.orange,
+          );
+        }
 
         canvas.drawRect(
-          Rect.fromLTWH(
-            col * miniMapScale,
-            row * miniMapScale,
-            miniMapScale,
-            miniMapScale,
+          Rect.fromLTRB(
+            j * MiniMap.scale,
+            i * MiniMap.scale,
+            j * MiniMap.scale + MiniMap.scale,
+            i * MiniMap.scale + MiniMap.scale,
           ),
           Paint()
             ..color = Colors.black
-            ..strokeWidth = 0.1 * miniMapScale
             ..style = PaintingStyle.stroke,
         );
       }
     }
+  }
 
-    /// draw player rays on minimap
+  void _drawRays(Canvas canvas, List<Offset> rays) {
     for (int rayCount = 0; rayCount < rays.length; rayCount++) {
       canvas.drawLine(
-        Player.position * miniMapScale,
-        rays[rayCount] * miniMapScale,
-        Paint()..color = Colors.white.withOpacity(0.5),
+        Player.position * MiniMap.scale,
+        rays[rayCount] * MiniMap.scale,
+        Paint()..color = Colors.white.withOpacity(0.3),
       );
     }
+  }
 
-    // draw player direction on minimap
+  void _drawPlayer(Canvas canvas) {
     canvas.drawLine(
-      Player.position * miniMapScale,
+      Player.position * MiniMap.scale,
       (Player.position +
               Offset(cosDegrees(Player.angle), sinDegrees(Player.angle))) *
-          miniMapScale,
+          MiniMap.scale,
       Paint()
         ..color = Colors.black
-        ..strokeWidth = miniMapScale * 0.3,
+        ..strokeWidth = MiniMap.scale * 0.3,
     );
 
-    // draw player position on minimap
     canvas.drawCircle(
-      Player.position * miniMapScale,
-      miniMapScale * 0.3,
+      Player.position * MiniMap.scale,
+      MiniMap.scale * 0.3,
       Paint()..color = Colors.orange,
     );
 
     canvas.drawCircle(
-      Player.position * miniMapScale,
-      miniMapScale * 0.3,
+      Player.position * MiniMap.scale,
+      MiniMap.scale * 0.3,
       Paint()
         ..color = Colors.black
         ..style = PaintingStyle.stroke
-        ..strokeWidth = miniMapScale * 0.2,
+        ..strokeWidth = MiniMap.scale * 0.2,
     );
   }
 
@@ -119,19 +112,29 @@ class RayCastingPainter extends CustomPainter {
         Offset(rayCount.toDouble(), 0),
         Offset(rayCount.toDouble(), Projection.halfHeight - wallHeight),
         Paint()
-          ..color = Colors.blue.shade900
+          ..color = Colors.indigo
           ..strokeWidth = 1,
       );
 
-  // void _drawWalls(Canvas canvas, int rayCount, double wallHeight) =>
-  //     canvas.drawLine(
-  //       Offset(rayCount.toDouble(), Projection.halfHeight - wallHeight),
-  //       Offset(rayCount.toDouble(), Projection.halfHeight + wallHeight),
-  //       Paint()
-  //         ..color = Colors.red
-  //         ..strokeWidth = 1,
-  //     );
+  void _drawWalls(
+    Canvas canvas,
+    int rayCount,
+    double wallHeight,
+    double distance,
+  ) =>
+      canvas.drawLine(
+        Offset(rayCount.toDouble(), Projection.halfHeight - wallHeight),
+        Offset(rayCount.toDouble(), Projection.halfHeight + wallHeight),
+        Paint()
+          ..color = getShadowedColor(
+            Colors.red,
+            distance,
+            MapInfo.data.length.toDouble(),
+          )
+          ..strokeWidth = 1,
+      );
 
+  // ignore: unused_element
   void _drawTexture(
     Canvas canvas,
     Offset ray,

@@ -3,6 +3,21 @@ import 'package:image/image.dart' as image;
 
 import '../data.dart';
 
+Future<Map<String, BitmapTexture>> loadTextures() async {
+  final Map<String, BitmapTexture> textures = <String, BitmapTexture>{};
+
+  textures['unknown'] = await getBitmapTexture('assets/unknown.bmp');
+  textures['grass'] = await getBitmapTexture('assets/grass.bmp');
+  textures['brick'] = await getBitmapTexture('assets/brick.bmp');
+  textures['stone'] = await getBitmapTexture('assets/stone.bmp');
+  textures['door'] = await getBitmapTexture('assets/door.bmp');
+  textures['portal'] = await getBitmapTexture('assets/portal.bmp');
+  textures['wall_with_leaves'] =
+      await getBitmapTexture('assets/wall_with_leaves.bmp');
+
+  return textures;
+}
+
 Future<BitmapTexture> getBitmapTexture(String bitmapAsset) async {
   final ByteData data = await rootBundle.load(bitmapAsset);
   final Uint8List bytes = data.buffer.asUint8List();

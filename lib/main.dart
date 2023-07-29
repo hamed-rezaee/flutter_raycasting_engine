@@ -20,13 +20,17 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
-  Completer<bool> isTextureLoaded = Completer<bool>();
+  Completer<void> isTextureLoaded = Completer<void>();
 
   @override
   void initState() {
     super.initState();
 
-    _loadTextures().then((_) => isTextureLoaded.complete(true));
+    loadTextures().then((Map<String, BitmapTexture> result) {
+      textures = result;
+
+      isTextureLoaded.complete();
+    });
   }
 
   @override
@@ -69,11 +73,17 @@ class _MainAppState extends State<MainApp> {
     if (event is RawKeyDownEvent) {
       if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
         rotateLeft();
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
+      }
+
+      if (event.logicalKey == LogicalKeyboardKey.arrowRight) {
         rotateRight();
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
+      }
+
+      if (event.logicalKey == LogicalKeyboardKey.arrowUp) {
         moveUp();
-      } else if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
+      }
+
+      if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
         moveDown();
       }
     }
@@ -125,16 +135,4 @@ class _MainAppState extends State<MainApp> {
 
   bool _isInsideWall() =>
       MapInfo.data[Player.position.dy.floor()][Player.position.dx.floor()] > 0;
-
-  Future<void> _loadTextures() async {
-    if (textures.isNotEmpty) {
-      return;
-    }
-
-    textures['unknown'] = await getBitmapTexture('assets/unknown.bmp');
-    textures['grass'] = await getBitmapTexture('assets/grass.bmp');
-    textures['brick'] = await getBitmapTexture('assets/brick.bmp');
-    textures['stone'] = await getBitmapTexture('assets/stone.bmp');
-    textures['door'] = await getBitmapTexture('assets/door.bmp');
-  }
 }

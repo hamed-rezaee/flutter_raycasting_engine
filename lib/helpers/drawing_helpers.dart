@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_raycasting/data.dart';
 
-import '../main.dart';
 import 'calculation_helpers.dart';
 
 void drawMiniMap({
   required Canvas canvas,
   required List<List<int>> map,
   required double scale,
+  required Map<String, BitmapTexture> textures,
+  required Map<int, String> textureMapping,
 }) {
   for (int i = 0; i < map.length; i++) {
     for (int j = 0; j < map.first.length; j++) {
       final BitmapTexture texture =
-          textures[MapInfo.textures[map[i][j]]] ?? textures['unknown']!;
+          textures[textureMapping[map[i][j]]] ?? textures['unknown']!;
       final int textureWidth = texture.bitmap.first.length;
       final int textureHeight = texture.bitmap.length;
 
@@ -57,7 +58,7 @@ void drawMiniMapRays({
     canvas.drawLine(
       playerPosition * scale,
       rays[rayCount] * scale,
-      Paint()..color = Colors.white.withOpacity(0.3),
+      Paint()..color = Colors.white.withOpacity(0.2),
     );
   }
 }
@@ -132,10 +133,11 @@ void drawTexture({
   required double distance,
   required double height,
   required Map<String, BitmapTexture> textures,
+  required Map<int, String> textureMapping,
 }) {
   final int mapValue = getMapValue(ray, MapInfo.data);
   final BitmapTexture texture =
-      textures[MapInfo.textures[mapValue]] ?? textures['unknown']!;
+      textures[MapInfo.textureMapping[mapValue]] ?? textures['unknown']!;
 
   final int textureWidth = texture.bitmap.first.length;
   final int textureHeight = texture.bitmap.length;

@@ -9,7 +9,7 @@ class Screen {
 }
 
 class MiniMap {
-  static const double scale = 16 / Screen.scale;
+  static const double scale = 18 / Screen.scale;
 }
 
 class Projection {
@@ -25,7 +25,7 @@ class RayCasting {
 
 class Player {
   static Offset position = const Offset(2, 2);
-  static double angle = 0;
+  static double angle = 45;
 
   static const double fov = 60;
   static const double radius = 10;
@@ -36,22 +36,24 @@ class Player {
 class MapInfo {
   static const List<List<int>> data = <List<int>>[
     <int>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    <int>[1, 0, 0, 0, 0, 2, 0, 0, 0, 1],
+    <int>[1, 0, 0, 0, 0, 2, 0, 9, 0, 1],
+    <int>[1, 0, 0, 0, 0, 2, 0, 0, 0, 1],
+    <int>[1, 0, 0, 0, 0, 2, 2, 0, 2, 1],
     <int>[1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    <int>[1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    <int>[1, 0, 5, 0, 0, 2, 0, 0, 0, 1],
-    <int>[1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    <int>[1, 0, 0, 0, 0, 0, 0, 2, 0, 1],
-    <int>[1, 1, 1, 1, 0, 0, 0, 2, 0, 1],
-    <int>[1, 0, 0, 3, 0, 0, 0, 2, 0, 1],
-    <int>[1, 0, 0, 1, 0, 0, 0, 2, 0, 1],
+    <int>[1, 5, 5, 5, 0, 0, 0, 0, 0, 1],
+    <int>[1, 0, 0, 4, 0, 0, 0, 0, 0, 1],
+    <int>[1, 0, 0, 5, 0, 0, 0, 0, 0, 1],
     <int>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   ];
 
-  static const Map<int, String> textures = <int, String>{
+  static const Map<int, String> textureMapping = <int, String>{
     0: 'grass',
     1: 'brick',
     2: 'stone',
     3: 'door',
+    4: 'portal',
+    5: 'wall_with_leaves',
   };
 }
 

@@ -7,15 +7,12 @@ import 'helpers/drawing_helpers.dart';
 
 class RayCastingPainter extends CustomPainter {
   RayCastingPainter({
-    required this.playerPosition,
-    required this.playerRotation,
+    required Offset playerPosition,
+    required double playerRotation,
   }) {
     Player.position = playerPosition;
     Player.angle = playerRotation;
   }
-
-  final Offset playerPosition;
-  final double playerRotation;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -34,7 +31,7 @@ class RayCastingPainter extends CustomPainter {
       const double halfFov = Player.fov / 2;
       const double increment = Player.fov / Projection.width;
 
-      final double distance = getDistance(playerPosition, rays[rayCount]);
+      final double distance = getDistance(Player.position, rays[rayCount]);
       final double rayAngle = Player.angle - halfFov + (rayCount * increment);
       final double correctedDistance =
           distance * cosDegrees(rayAngle - Player.angle);
@@ -56,6 +53,7 @@ class RayCastingPainter extends CustomPainter {
         distance: distance,
         height: Projection.height,
         textures: textures,
+        textureMapping: MapInfo.textureMapping,
       );
 
       drawGround(
@@ -70,6 +68,8 @@ class RayCastingPainter extends CustomPainter {
       canvas: canvas,
       map: MapInfo.data,
       scale: MiniMap.scale,
+      textures: textures,
+      textureMapping: MapInfo.textureMapping,
     );
 
     drawMiniMapRays(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,11 +20,20 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> {
+  Completer<bool> isTextureLoaded = Completer<bool>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    _loadTextures().then((_) => isTextureLoaded.complete(true));
+  }
+
   @override
   Widget build(BuildContext context) => MaterialApp(
         home: Scaffold(
           body: FutureBuilder<void>(
-            future: _loadTextures(),
+            future: isTextureLoaded.future,
             builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());

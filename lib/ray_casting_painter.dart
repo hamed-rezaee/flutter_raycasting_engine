@@ -4,7 +4,6 @@ import 'package:flutter_raycasting/textures.dart';
 import 'data.dart';
 import 'calculation_helpers.dart';
 import 'drawing_helpers.dart';
-import 'texture_helpers.dart';
 
 class RayCastingPainter extends CustomPainter {
   RayCastingPainter({
@@ -20,10 +19,6 @@ class RayCastingPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    extractUniqueColorsAndPositions('assets/brick.png').then((value) {
-      print(value);
-    });
-
     canvas.scale(Screen.scale, Screen.scale);
 
     final List<Offset> rays = calculateRaycasts(

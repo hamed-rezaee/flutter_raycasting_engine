@@ -38,11 +38,12 @@ class RayCastingPainter extends CustomPainter {
       final double wallHeight =
           (Projection.halfHeight / correctedDistance).floorToDouble();
 
-      drawSky(
+      drawBackground(
         canvas: canvas,
-        rayCount: rayCount,
-        wallHeight: wallHeight,
-        height: Projection.height,
+        x: rayCount,
+        y1: 0,
+        y2: Projection.halfHeight - wallHeight,
+        texture: textures['background']!,
       );
 
       drawTexture(
@@ -55,6 +56,15 @@ class RayCastingPainter extends CustomPainter {
         textures: textures,
         textureMapping: MapInfo.textureMapping,
       );
+
+      // drawWalls(
+      //   canvas: canvas,
+      //   rayCount: rayCount,
+      //   wallHeight: wallHeight,
+      //   distance: distance,
+      //   height: Projection.height,
+      //   map: MapInfo.data,
+      // );
 
       drawGround(
         canvas: canvas,

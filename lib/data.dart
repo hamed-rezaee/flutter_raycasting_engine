@@ -9,7 +9,7 @@ class Screen {
 }
 
 class MiniMap {
-  static const double scale = 18 / Screen.scale;
+  static const double scale = 14 / Screen.scale;
 }
 
 class Projection {
@@ -20,40 +20,51 @@ class Projection {
 }
 
 class RayCasting {
-  static const int precision = 64;
+  static const int precision = 128;
 }
 
 class Player {
   static Offset position = const Offset(2, 2);
-  static double angle = 45;
+  static double _angle = 45;
 
   static const double fov = 60;
   static const double radius = 10;
   static const double speed = 0.2;
   static const double rotationSpeed = 3;
+
+  static double get angle => _angle;
+
+  static set angle(double value) {
+    _angle = value;
+
+    if (_angle > 360) {
+      _angle -= 360;
+    } else if (_angle < 0) {
+      _angle += 360;
+    }
+  }
 }
 
 class MapInfo {
   static const List<List<int>> data = <List<int>>[
-    <int>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    <int>[1, 0, 0, 0, 0, 2, 0, 0, 0, 1],
-    <int>[1, 0, 0, 0, 0, 2, 0, 9, 0, 1],
-    <int>[1, 0, 0, 0, 0, 2, 0, 0, 0, 1],
-    <int>[1, 0, 0, 0, 0, 2, 2, 0, 2, 1],
-    <int>[1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    <int>[1, 5, 5, 5, 0, 0, 0, 0, 0, 1],
-    <int>[1, 0, 0, 4, 0, 0, 0, 0, 0, 1],
-    <int>[1, 0, 0, 5, 0, 0, 0, 0, 0, 1],
-    <int>[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    <int>[4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+    <int>[4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+    <int>[4, 0, 0, 2, 2, 2, 2, 2, 0, 0, 3, 3, 3, 0, 0, 4],
+    <int>[4, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 3, 0, 0, 4],
+    <int>[4, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 3, 0, 0, 4],
+    <int>[4, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1],
+    <int>[4, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 4],
+    <int>[4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4],
+    <int>[4, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4],
+    <int>[4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
   ];
 
   static const Map<int, String> textureMapping = <int, String>{
     0: 'grass',
-    1: 'brick',
-    2: 'stone',
-    3: 'door',
-    4: 'portal',
-    5: 'wall_with_leaves',
+    1: 'portal',
+    2: 'wall_stone',
+    3: 'wall_green',
+    4: 'wall_brick',
   };
 }
 

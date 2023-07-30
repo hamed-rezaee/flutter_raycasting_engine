@@ -10,15 +10,12 @@ double sinDegrees(double degrees) => sin(degreesToRadians(degrees));
 double getDistance(Offset a, Offset b) =>
     sqrt(pow(a.dx - b.dx, 2) + pow(a.dy - b.dy, 2));
 
-Color getShadowedColor(Color color, double distance, double maxDistance) {
-  final double normalizedDistance = distance / maxDistance;
-  final double shadowIntensity = lerpDouble(1.0, 0.0, normalizedDistance)!;
-
+Color getShadowedColor(Color color, double distance) {
   final Color shadowedWallColor = Color.fromARGB(
     color.alpha,
-    (color.red * shadowIntensity).toInt(),
-    (color.green * shadowIntensity).toInt(),
-    (color.blue * shadowIntensity).toInt(),
+    (color.red / (1 + (pow(distance, 4) * 0.0007))).floor(),
+    (color.green / (1 + (pow(distance, 4) * 0.0007))).floor(),
+    (color.blue / (1 + (pow(distance, 4) * 0.0007))).floor(),
   );
 
   return shadowedWallColor;
@@ -45,12 +42,8 @@ List<Offset> calculateRaycasts({
     final double rayCos = cosDegrees(rayAngle) / precision;
     final double raySin = sinDegrees(rayAngle) / precision;
 
-    while (true) {
+    while (getMapValue(ray, map) == 0) {
       ray = Offset(ray.dx + rayCos, ray.dy + raySin);
-
-      if (map[ray.dy.floor()][ray.dx.floor()] > 0) {
-        break;
-      }
     }
 
     rays.add(ray);

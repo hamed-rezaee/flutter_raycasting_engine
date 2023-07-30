@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_raycasting/data.dart';
 
@@ -115,13 +117,12 @@ void drawWalls({
   required double wallHeight,
   required double distance,
   required double height,
-  required List<List<int>> map,
 }) =>
     canvas.drawLine(
-      Offset(rayCount.toDouble(), height / 2 - wallHeight),
-      Offset(rayCount.toDouble(), height / 2 + wallHeight),
+      Offset(rayCount.toDouble(), height / 2 - wallHeight - 1),
+      Offset(rayCount.toDouble(), height / 2 + wallHeight + 1),
       Paint()
-        ..color = getShadowedColor(Colors.red, distance, map.length.toDouble())
+        ..color = getShadowedColor(Colors.red, distance)
         ..strokeWidth = 1,
     );
 
@@ -155,13 +156,12 @@ void drawTexture({
       ..color = getShadowedColor(
         textureColor,
         distance,
-        MapInfo.data.length.toDouble(),
       )
       ..strokeWidth = 1;
 
     canvas.drawLine(
-      Offset(rayCount.toDouble(), y),
-      Offset(rayCount.toDouble(), y + yIncrement + 0.5),
+      Offset(rayCount.toDouble(), y - 1),
+      Offset(rayCount.toDouble(), y + yIncrement + 1),
       wallPainter,
     );
 
@@ -182,3 +182,29 @@ void drawGround({
         ..color = Colors.green
         ..strokeWidth = 1,
     );
+
+void drawBackground({
+  required Canvas canvas,
+  required int x,
+  required double y1,
+  required double y2,
+  required BitmapTexture texture,
+}) {
+  final double offset = Player.angle + x;
+
+  for (int y = y1.toInt(); y < y2; y++) {
+    final int texturePositionX =
+        (texture.bitmap.first.length * (offset % 360) / 360).floor();
+    final int texturePositionY =
+        (texture.bitmap.length * (y % Projection.height) / Projection.height)
+            .floor();
+
+    canvas.drawPoints(
+      PointMode.points,
+      <Offset>[Offset(x.toDouble(), y.toDouble())],
+      Paint()
+        ..color = texture.bitmap[texturePositionY][texturePositionX]
+        ..strokeWidth = 1,
+    );
+  }
+}

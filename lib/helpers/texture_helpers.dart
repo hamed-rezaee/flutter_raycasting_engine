@@ -8,12 +8,11 @@ Future<Map<String, BitmapTexture>> loadTextures() async {
 
   textures['unknown'] = await getBitmapTexture('assets/unknown.bmp');
   textures['grass'] = await getBitmapTexture('assets/grass.bmp');
-  textures['brick'] = await getBitmapTexture('assets/brick.bmp');
-  textures['stone'] = await getBitmapTexture('assets/stone.bmp');
-  textures['door'] = await getBitmapTexture('assets/door.bmp');
   textures['portal'] = await getBitmapTexture('assets/portal.bmp');
-  textures['wall_with_leaves'] =
-      await getBitmapTexture('assets/wall_with_leaves.bmp');
+  textures['wall_stone'] = await getBitmapTexture('assets/wall_stone.bmp');
+  textures['wall_green'] = await getBitmapTexture('assets/wall_green.bmp');
+  textures['wall_brick'] = await getBitmapTexture('assets/wall_brick.bmp');
+  textures['background'] = await getBitmapTexture('assets/background.bmp');
 
   return textures;
 }

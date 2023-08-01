@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:statsfl/statsfl.dart';
+
 import 'data.dart';
 import 'helpers/calculation_helpers.dart';
 import 'helpers/texture_helpers.dart';
@@ -10,7 +12,8 @@ import 'ray_casting_painter.dart';
 
 Map<String, BitmapTexture> textures = <String, BitmapTexture>{};
 
-void main() => runApp(const MainApp());
+void main() =>
+    runApp(StatsFl(align: Alignment.topRight, child: const MainApp()));
 
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -72,7 +75,7 @@ class _MainAppState extends State<MainApp> {
                         Positioned(
                           bottom: 0,
                           child: Row(
-                            children: [
+                            children: <Widget>[
                               IconButton(
                                 iconSize: Screen.height / 6,
                                 icon: const Icon(

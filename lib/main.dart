@@ -60,22 +60,58 @@ class _MainAppState extends State<MainApp> {
                     Screen.width = MediaQuery.sizeOf(context).width;
                     Screen.height = MediaQuery.sizeOf(context).height;
 
-                    return ClipRect(
-                      child: SizedBox(
-                        width: Screen.width,
-                        height: Screen.height,
-                        child: Stack(
-                          children: <Widget>[
-                            CustomPaint(
-                              size: Size(Screen.width, Screen.height),
-                              painter: RayCastingPainter(
-                                playerPosition: Player.position,
-                                playerRotation: Player.angle,
-                              ),
-                            ),
-                          ],
+                    return Stack(
+                      children: <Widget>[
+                        CustomPaint(
+                          size: Size(Screen.width, Screen.height),
+                          painter: RayCastingPainter(
+                            playerPosition: Player.position,
+                            playerRotation: Player.angle,
+                          ),
                         ),
-                      ),
+                        Positioned(
+                          bottom: 0,
+                          child: Row(
+                            children: [
+                              IconButton(
+                                iconSize: Screen.height / 6,
+                                icon: const Icon(
+                                  Icons.rotate_left,
+                                  color: Colors.white,
+                                ),
+                                onPressed: rotateLeft,
+                              ),
+                              const SizedBox(width: 16),
+                              IconButton(
+                                iconSize: Screen.height / 6,
+                                icon: const Icon(
+                                  Icons.arrow_upward,
+                                  color: Colors.white,
+                                ),
+                                onPressed: moveUp,
+                              ),
+                              const SizedBox(width: 16),
+                              IconButton(
+                                iconSize: Screen.height / 6,
+                                icon: const Icon(
+                                  Icons.arrow_downward,
+                                  color: Colors.white,
+                                ),
+                                onPressed: moveDown,
+                              ),
+                              const SizedBox(width: 16),
+                              IconButton(
+                                iconSize: Screen.height / 6,
+                                icon: const Icon(
+                                  Icons.rotate_right,
+                                  color: Colors.white,
+                                ),
+                                onPressed: rotateRight,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     );
                   },
                 ),

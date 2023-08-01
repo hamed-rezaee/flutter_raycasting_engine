@@ -29,7 +29,8 @@ class RayCastingPainter extends CustomPainter {
 
     for (int rayCount = 0; rayCount < rays.length; rayCount++) {
       const double halfFov = Player.fov / 2;
-      const double increment = Player.fov / Projection.width;
+
+      final double increment = Player.fov / Projection.width;
 
       final double distance = getDistance(Player.position, rays[rayCount]);
       final double rayAngle = Player.angle - halfFov + (rayCount * increment);

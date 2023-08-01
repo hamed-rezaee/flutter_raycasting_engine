@@ -26,6 +26,15 @@ class _MainAppState extends State<MainApp> {
   void initState() {
     super.initState();
 
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+    );
+
+    SystemChrome.setPreferredOrientations(<DeviceOrientation>[
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+    ]);
+
     loadTextures().then((Map<String, BitmapTexture> result) {
       textures = result;
 
@@ -46,22 +55,29 @@ class _MainAppState extends State<MainApp> {
               return RawKeyboardListener(
                 focusNode: FocusNode(),
                 onKey: _handleKeyPress,
-                child: ClipRect(
-                  child: SizedBox(
-                    width: Screen.width,
-                    height: Screen.height,
-                    child: Stack(
-                      children: <Widget>[
-                        CustomPaint(
-                          size: const Size(Screen.width, Screen.height),
-                          painter: RayCastingPainter(
-                            playerPosition: Player.position,
-                            playerRotation: Player.angle,
-                          ),
+                child: OrientationBuilder(
+                  builder: (BuildContext context, Orientation orientation) {
+                    Screen.width = MediaQuery.sizeOf(context).width;
+                    Screen.height = MediaQuery.sizeOf(context).height;
+
+                    return ClipRect(
+                      child: SizedBox(
+                        width: Screen.width,
+                        height: Screen.height,
+                        child: Stack(
+                          children: <Widget>[
+                            CustomPaint(
+                              size: Size(Screen.width, Screen.height),
+                              painter: RayCastingPainter(
+                                playerPosition: Player.position,
+                                playerRotation: Player.angle,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
+                    );
+                  },
                 ),
               );
             },

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Screen {
-  static const double width = 640;
-  static const double height = 480;
-  static const double halfWidth = width / 2;
-  static const double halfHeight = height / 2;
+  static double width = 640;
+  static double height = 480;
+  static double halfWidth = width / 2;
+  static double halfHeight = height / 2;
   static const double scale = 2;
 }
 
@@ -13,10 +13,10 @@ class MiniMap {
 }
 
 class Projection {
-  static const double width = Screen.width / Screen.scale;
-  static const double height = Screen.height / Screen.scale;
-  static const double halfWidth = width / 2;
-  static const double halfHeight = height / 2;
+  static double width = Screen.width / Screen.scale;
+  static double height = Screen.height / Screen.scale;
+  static double halfWidth = width / 2;
+  static double halfHeight = height / 2;
 }
 
 class RayCasting {

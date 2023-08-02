@@ -8,7 +8,8 @@ import 'package:statsfl/statsfl.dart';
 import 'data.dart';
 import 'helpers/calculation_helpers.dart';
 import 'helpers/texture_helpers.dart';
-import 'ray_casting_painter.dart';
+import 'painters/map_painter.dart';
+import 'painters/ray_casting_painter.dart';
 
 Map<String, BitmapTexture> textures = <String, BitmapTexture>{};
 
@@ -70,6 +71,17 @@ class _MainAppState extends State<MainApp> {
                           painter: RayCastingPainter(
                             playerPosition: Player.position,
                             playerRotation: Player.angle,
+                          ),
+                        ),
+                        Positioned(
+                          top: 8,
+                          left: 8,
+                          child: CustomPaint(
+                            size: Size(Screen.width, Screen.height),
+                            painter: MapPainter(
+                              playerPosition: Player.position,
+                              playerRotation: Player.angle,
+                            ),
                           ),
                         ),
                         Positioned(

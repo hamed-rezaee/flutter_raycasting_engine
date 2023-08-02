@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_raycasting/main.dart';
 
-import 'data.dart';
-import 'helpers/calculation_helpers.dart';
-import 'helpers/drawing_helpers.dart';
+import '../data.dart';
+import '../helpers/calculation_helpers.dart';
+import '../helpers/drawing_helpers.dart';
 
 class RayCastingPainter extends CustomPainter {
   RayCastingPainter({
@@ -74,30 +74,8 @@ class RayCastingPainter extends CustomPainter {
         height: Projection.height,
       );
     }
-
-    drawMiniMap(
-      canvas: canvas,
-      map: MapInfo.data,
-      scale: MiniMap.scale,
-      textures: textures,
-      textureMapping: MapInfo.textureMapping,
-    );
-
-    drawMiniMapRays(
-      canvas: canvas,
-      playerPosition: Player.position,
-      rays: rays,
-      scale: MiniMap.scale,
-    );
-
-    drawMiniMapPlayer(
-      canvas: canvas,
-      playerPosition: Player.position,
-      playerAngle: Player.angle,
-      scale: MiniMap.scale,
-    );
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

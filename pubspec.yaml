@@ -1,5 +1,5 @@
 name: flutter_raycasting
-description: A Raycasting Engine for Flutter, based on https://github.com/vinibiavatti1/RayCastingTutorial.
+description: A Raycasting Engine for Flutter, based on https://github.com/vinibiavatti1/raycastingtutorial.
 
 publish_to: "none"
 version: 0.1.0

@@ -55,24 +55,6 @@ The project consists of the following main components:
 
 6. **data.dart**: Contains various constants and data structures used in the engine, such as screen dimensions, player information, map data, and texture mapping.
 
-## Setup
-
-1. Clone this repository to your local machine.
-2. Ensure you have Flutter installed and set up properly on your development environment.
-3. Run `flutter pub get` to fetch the required dependencies.
-
-## Usage
-
-To use the Raycasting Engine, you can integrate it into your existing Flutter project or use it as a standalone application.
-
-1. Import the necessary components from the `raycasting_engine` package into your main Flutter file.
-
-2. Set up your game logic and controls, adjusting player movement, camera angles, and other interactions as needed.
-
-3. Use the `RayCastingPainter` to render the 3D view, and the `MapPainter` to render the minimap.
-
-4. Customize the map layout, textures, and other elements in the `data.dart` file to create your desired game environment.
-
 ## Acknowledgments
 
 - Special thanks to [Vinícius Avellar](https://github.com/vinibiavatti1) for the original tutorial that inspired this project.

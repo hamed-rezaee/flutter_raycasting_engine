@@ -30,7 +30,7 @@ class Player {
   static const double fov = 60;
   static const double radius = 10;
   static const double speed = 0.2;
-  static const double rotationSpeed = 8;
+  static const double rotationSpeed = 1;
 
   static double get angle => _angle;
 

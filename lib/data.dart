@@ -9,7 +9,7 @@ class Screen {
 }
 
 class MiniMap {
-  static const double scale = 14 / Screen.scale;
+  static const double scale = 18 / Screen.scale;
 }
 
 class Projection {
@@ -20,7 +20,7 @@ class Projection {
 }
 
 class RayCasting {
-  static const int precision = 128;
+  static const int precision = 64;
 }
 
 class Player {
@@ -30,7 +30,7 @@ class Player {
   static const double fov = 60;
   static const double radius = 10;
   static const double speed = 0.2;
-  static const double rotationSpeed = 3;
+  static const double rotationSpeed = 8;
 
   static double get angle => _angle;
 

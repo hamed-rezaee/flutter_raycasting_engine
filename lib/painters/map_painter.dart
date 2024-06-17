@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_raycasting/data.dart';
+import 'package:flutter_raycasting/helpers/calculation_helpers.dart';
+import 'package:flutter_raycasting/helpers/drawing_helpers.dart';
 import 'package:flutter_raycasting/main.dart';
-
-import '../data.dart';
-import '../helpers/calculation_helpers.dart';
-import '../helpers/drawing_helpers.dart';
 
 class MapPainter extends CustomPainter {
   MapPainter({
@@ -18,7 +17,7 @@ class MapPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.scale(Screen.scale, Screen.scale);
 
-    final List<Offset> rays = calculateRaycasts(
+    final rays = calculateRaycasts(
       playerPosition: Player.position,
       playerAngle: Player.angle,
       fov: Player.fov,

@@ -2,14 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:flutter_raycasting/data.dart';
+import 'package:flutter_raycasting/helpers/calculation_helpers.dart';
+import 'package:flutter_raycasting/helpers/texture_helpers.dart';
+import 'package:flutter_raycasting/painters/map_painter.dart';
+import 'package:flutter_raycasting/painters/ray_casting_painter.dart';
 import 'package:statsfl/statsfl.dart';
-
-import 'data.dart';
-import 'helpers/calculation_helpers.dart';
-import 'helpers/texture_helpers.dart';
-import 'painters/map_painter.dart';
-import 'painters/ray_casting_painter.dart';
 
 Map<String, BitmapTexture> textures = <String, BitmapTexture>{};
 
@@ -56,9 +54,9 @@ class _MainAppState extends State<MainApp> {
                 return const Center(child: CircularProgressIndicator());
               }
 
-              return RawKeyboardListener(
+              return KeyboardListener(
                 focusNode: FocusNode(),
-                onKey: _handleKeyPress,
+                onKeyEvent: _handleKeyPress,
                 child: OrientationBuilder(
                   builder: (BuildContext context, Orientation orientation) {
                     Screen.width = MediaQuery.sizeOf(context).width;
@@ -84,48 +82,6 @@ class _MainAppState extends State<MainApp> {
                             ),
                           ),
                         ),
-                        Positioned(
-                          bottom: 0,
-                          child: Row(
-                            children: <Widget>[
-                              IconButton(
-                                iconSize: Screen.height / 6,
-                                icon: const Icon(
-                                  Icons.rotate_left,
-                                  color: Colors.white,
-                                ),
-                                onPressed: rotateLeft,
-                              ),
-                              const SizedBox(width: 16),
-                              IconButton(
-                                iconSize: Screen.height / 6,
-                                icon: const Icon(
-                                  Icons.arrow_upward,
-                                  color: Colors.white,
-                                ),
-                                onPressed: moveUp,
-                              ),
-                              const SizedBox(width: 16),
-                              IconButton(
-                                iconSize: Screen.height / 6,
-                                icon: const Icon(
-                                  Icons.arrow_downward,
-                                  color: Colors.white,
-                                ),
-                                onPressed: moveDown,
-                              ),
-                              const SizedBox(width: 16),
-                              IconButton(
-                                iconSize: Screen.height / 6,
-                                icon: const Icon(
-                                  Icons.rotate_right,
-                                  color: Colors.white,
-                                ),
-                                onPressed: rotateRight,
-                              ),
-                            ],
-                          ),
-                        )
                       ],
                     );
                   },
@@ -136,8 +92,8 @@ class _MainAppState extends State<MainApp> {
         ),
       );
 
-  void _handleKeyPress(RawKeyEvent event) {
-    if (event is RawKeyDownEvent) {
+  void _handleKeyPress(KeyEvent event) {
+    if (event is KeyRepeatEvent) {
       if (event.logicalKey == LogicalKeyboardKey.arrowLeft) {
         rotateLeft();
       }

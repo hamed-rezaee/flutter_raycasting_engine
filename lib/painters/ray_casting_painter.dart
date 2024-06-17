@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_raycasting/data.dart';
+import 'package:flutter_raycasting/helpers/calculation_helpers.dart';
+import 'package:flutter_raycasting/helpers/drawing_helpers.dart';
 import 'package:flutter_raycasting/main.dart';
-
-import '../data.dart';
-import '../helpers/calculation_helpers.dart';
-import '../helpers/drawing_helpers.dart';
 
 class RayCastingPainter extends CustomPainter {
   RayCastingPainter({
@@ -18,7 +17,7 @@ class RayCastingPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas.scale(Screen.scale, Screen.scale);
 
-    final List<Offset> rays = calculateRaycasts(
+    final rays = calculateRaycasts(
       playerPosition: Player.position,
       playerAngle: Player.angle,
       fov: Player.fov,
@@ -27,16 +26,15 @@ class RayCastingPainter extends CustomPainter {
       map: MapInfo.data,
     );
 
-    for (int rayCount = 0; rayCount < rays.length; rayCount++) {
-      const double halfFov = Player.fov / 2;
+    for (var rayCount = 0; rayCount < rays.length; rayCount++) {
+      const halfFov = Player.fov / 2;
 
-      final double increment = Player.fov / Projection.width;
+      final increment = Player.fov / Projection.width;
 
-      final double distance = getDistance(Player.position, rays[rayCount]);
-      final double rayAngle = Player.angle - halfFov + (rayCount * increment);
-      final double correctedDistance =
-          distance * cosDegrees(rayAngle - Player.angle);
-      final double wallHeight =
+      final distance = getDistance(Player.position, rays[rayCount]);
+      final rayAngle = Player.angle - halfFov + (rayCount * increment);
+      final correctedDistance = distance * cosDegrees(rayAngle - Player.angle);
+      final wallHeight =
           (Projection.halfHeight / correctedDistance).floorToDouble();
 
       drawBackground(

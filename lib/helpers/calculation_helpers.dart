@@ -11,7 +11,7 @@ double getDistance(Offset a, Offset b) =>
     sqrt(pow(a.dx - b.dx, 2) + pow(a.dy - b.dy, 2));
 
 Color getShadowedColor(Color color, double distance) {
-  final Color shadowedWallColor = Color.fromARGB(
+  final shadowedWallColor = Color.fromARGB(
     color.alpha,
     (color.red / (1 + (pow(distance, 4) * 0.0007))).floor(),
     (color.green / (1 + (pow(distance, 4) * 0.0007))).floor(),
@@ -32,15 +32,15 @@ List<Offset> calculateRaycasts({
   required double width,
   required List<List<int>> map,
 }) {
-  final List<Offset> rays = <Offset>[];
+  final rays = <Offset>[];
 
-  double rayAngle = playerAngle - fov / 2;
+  var rayAngle = playerAngle - fov / 2;
 
-  for (int rayCount = 0; rayCount < width; rayCount++) {
-    Offset ray = playerPosition;
+  for (var rayCount = 0; rayCount < width; rayCount++) {
+    var ray = playerPosition;
 
-    final double rayCos = cosDegrees(rayAngle) / precision;
-    final double raySin = sinDegrees(rayAngle) / precision;
+    final rayCos = cosDegrees(rayAngle) / precision;
+    final raySin = sinDegrees(rayAngle) / precision;
 
     while (getMapValue(ray, map) == 0) {
       ray = Offset(ray.dx + rayCos, ray.dy + raySin);
